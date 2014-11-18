@@ -1,3 +1,6 @@
+[![License](https://poser.pugx.org/timitao/behatclipboard/license.svg)](https://packagist.org/packages/timitao/behatclipboard)
+[![Total Downloads](https://poser.pugx.org/timitao/behatclipboard/downloads.svg)](https://packagist.org/packages/timitao/behatclipboard)
+
 BehatClipboard
 ==============
 
