@@ -1,5 +1,10 @@
 [![License](https://poser.pugx.org/timitao/behatclipboard/license.svg)](https://packagist.org/packages/timitao/behatclipboard)
+[![Latest Stable Version](https://poser.pugx.org/timitao/behatclipboard/v/stable.svg)](https://packagist.org/packages/timitao/behatclipboard)
+[![Latest Unstable Version](https://poser.pugx.org/timitao/behatclipboard/v/unstable.svg)](https://packagist.org/packages/timitao/behatclipboard) 
 [![Total Downloads](https://poser.pugx.org/timitao/behatclipboard/downloads.svg)](https://packagist.org/packages/timitao/behatclipboard)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/819444f5-acac-4508-bf3f-185cef9dd4ec/mini.png)](https://insight.sensiolabs.com/projects/819444f5-acac-4508-bf3f-185cef9dd4ec)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/timitao/behatclipboard/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/timitao/behatclipboard/?branch=master)
+
 
 BehatClipboard
 ==============
