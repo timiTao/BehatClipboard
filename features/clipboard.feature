@@ -23,3 +23,7 @@ Feature: Test base clipboard context
       | test1        | aaa            |
       | test11.22    | bbb            |
     And Clipboard has value "aaa" on key "test1"
+
+  Scenario: Test defaults
+    Given Clipboard has value "value1" on key "key1"
+    And Clipboard has value "value2" on key "key2.key2"

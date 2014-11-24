@@ -76,6 +76,9 @@ class ClipboardExtension implements ExtensionInterface
             ->scalarNode('pattern')->defaultValue('/^%s\.([a-zA-Z0-9_\.]+)/')->info(
                 'All values that match PATTERN will be try to transform from clipboard value. Default: /^%s\.([a-zA-Z0-9_\.]+)/ where %s will be prefix'
             )->end()
+            ->arrayNode('defaults')
+                ->prototype('scalar')
+            ->end()
         ;
     }
 
@@ -91,5 +94,6 @@ class ClipboardExtension implements ExtensionInterface
         $loader->load('services.yml');
 
         $container->setParameter('clipboard.parameters', $config);
+        $container->setParameter('clipboard.parameters.defaults', $config['defaults']);
     }
 }

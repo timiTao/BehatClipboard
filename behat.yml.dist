@@ -8,3 +8,6 @@ default:
         - Behat\ClipboardExtension\Context\FeatureContext
   extensions:
     Behat\ClipboardExtension\ClipboardExtension:
+      defaults:
+        key1: value1
+        key2.key2 : value2

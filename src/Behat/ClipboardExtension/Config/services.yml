@@ -8,6 +8,8 @@ parameters:
 services:
   clipboard:
     class:  "%clipboard.class%"
+    arguments:
+      - "%clipboard.parameters.defaults%"
   clipboard.context_reader:
     class: "%clipboard.context_reader.class%"
     tags:

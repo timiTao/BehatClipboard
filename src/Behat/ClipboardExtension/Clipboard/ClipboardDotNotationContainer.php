@@ -24,7 +24,10 @@ class ClipboardDotNotationContainer implements ClipboardInterface
      */
     function __construct($parameters = [])
     {
-        $this->dotNotation = new DotNotation($parameters);
+        $this->dotNotation = new DotNotation([]);
+        foreach ($parameters as $key => $value) {
+            $this->set($key, $value);
+        }
     }
 
     /**

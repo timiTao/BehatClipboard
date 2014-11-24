@@ -79,6 +79,16 @@ Base context allow:
 * check containing KEY by clipboard
 * copy from KEY1 to KEY2
 
+## Default
+
+We can define default values for clipboard by:
+
+    extensions:
+        Behat\ClipboardExtension\ClipboardExtension:
+            defaults:
+                key1: value1
+                key2.key2 : value2
+
 ## Extra
 
 Additionally, it assist dotNotification.
