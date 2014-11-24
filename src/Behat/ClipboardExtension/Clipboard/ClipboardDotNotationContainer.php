@@ -5,13 +5,27 @@
  */
 namespace Behat\ClipboardExtension\Clipboard;
 
+use Behat\Utils\DotNotation\DotNotation;
+
 /**
  * Class ClipboardContainer
  *
  * @package Behat\ClipboardExtension\Clipboard
  */
-class ClipboardContainer extends \ArrayObject implements ClipboardInterface
+class ClipboardDotNotationContainer implements ClipboardInterface
 {
+    /**
+     * @var DotNotation
+     */
+    protected $dotNotation;
+
+    /**
+     * @param array $parameters
+     */
+    function __construct($parameters = [])
+    {
+        $this->dotNotation = new DotNotation($parameters);
+    }
 
     /**
      * @param string $key
@@ -19,7 +33,7 @@ class ClipboardContainer extends \ArrayObject implements ClipboardInterface
      */
     public function set($key, $value)
     {
-        $this->offsetSet($key, $value);
+        $this->dotNotation->set($key, $value);
     }
 
     /**
@@ -28,7 +42,7 @@ class ClipboardContainer extends \ArrayObject implements ClipboardInterface
      */
     public function has($key)
     {
-        return $this->offsetExists($key);
+        return $this->dotNotation->have($key);
     }
 
     /**
@@ -37,6 +51,6 @@ class ClipboardContainer extends \ArrayObject implements ClipboardInterface
      */
     public function get($key)
     {
-        return $this->offsetGet($key);
+        return $this->dotNotation->get($key);
     }
 }

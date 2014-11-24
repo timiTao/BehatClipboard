@@ -1,0 +1,16 @@
+language: php
+
+php: [5.4, 5.5]
+
+branches:
+  except:
+    - /^bugfix\/.*$/
+    - /^feature\/.*$/
+    - /^optimization\/.*$/
+
+before_script:
+  - composer install --prefer-source --no-interaction --no-progress
+  - export PATH=./bin:$PATH
+
+script:
+  -  php vendor/bin/behat

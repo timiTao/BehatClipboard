@@ -14,3 +14,4 @@ class ClipboardException extends \Exception
 {
 
 }
+

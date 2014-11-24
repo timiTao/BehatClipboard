@@ -16,3 +16,10 @@ Feature: Test base clipboard context
     | value   | key                 | clipboardKey                  | key2      |
     | 421     | keyTest2            | clipboard.keyTest2            | key2Test  |
     | 56789jj | keyTest.test1.test2 | clipboard.keyTest.test1.test2 | key2Test3 |
+
+  Scenario: Table saving data
+    Given Clipboard save the table
+      | clipboardKey | clipboardValue |
+      | test1        | aaa            |
+      | test11.22    | bbb            |
+    And Clipboard has value "aaa" on key "test1"

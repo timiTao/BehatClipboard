@@ -8,7 +8,7 @@ namespace Behat\ClipboardExtension\Context\Initializer;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\Initializer\ContextInitializer;
 use Behat\ClipboardExtension\Clipboard\ClipboardInterface;
-use Behat\ClipboardExtension\Context\ClipboardContextInterface;
+use Behat\ClipboardExtension\Context\ClipboardContextAwareInterface;
 
 /**
  * Class ClipboardInitializer
@@ -37,10 +37,10 @@ class ClipboardInitializer implements ContextInitializer
      */
     public function initializeContext(Context $context)
     {
-        if (!$context instanceof ClipboardContextInterface) {
+        if (!$context instanceof ClipboardContextAwareInterface) {
             return;
         }
-        /** @var ClipboardContextInterface $context */
+        /** @var ClipboardContextAwareInterface $context */
 
         $context->setClipboard($this->clipboard);
     }

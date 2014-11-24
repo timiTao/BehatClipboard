@@ -18,10 +18,6 @@ use Behat\ClipboardExtension\Context\Reader\Transform\ClipboardTransformInterfac
  */
 class ClipboardEventReader implements ContextReader
 {
-    /**
-     * @var array
-     */
-    protected $parameters;
 
     /**
      * @var ClipboardTransformInterface
@@ -29,8 +25,13 @@ class ClipboardEventReader implements ContextReader
     protected $transform;
 
     /**
+     * @var array
+     */
+    protected $parameters;
+
+    /**
      * @param ClipboardTransformInterface $transform
-     * @param $parameters
+     * @param array $parameters
      */
     function __construct(ClipboardTransformInterface $transform, $parameters)
     {
@@ -65,7 +66,6 @@ class ClipboardEventReader implements ContextReader
     {
         return $this->parameters['prefix'];
     }
-
     /**
      * @return string
      */
@@ -73,5 +73,4 @@ class ClipboardEventReader implements ContextReader
     {
         return $this->parameters['pattern'];
     }
-
 }

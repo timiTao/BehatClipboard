@@ -8,12 +8,13 @@ namespace Behat\ClipboardExtension\Context;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\ClipboardExtension\Clipboard\ClipboardInterface;
+use Behat\Gherkin\Node\TableNode;
 
 /**
  * Class FeatureContext
  * @package Behat\ClipboardExtension\Context
  */
-class FeatureContext implements Context, SnippetAcceptingContext, ClipboardContextInterface
+class FeatureContext implements Context, SnippetAcceptingContext, ClipboardContextAwareInterface
 {
     /**
      * @var ClipboardInterface
@@ -62,8 +63,9 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
      */
     public function clipboardHasValueOnKey($arg1, $arg2)
     {
-        if ($arg1 != $this->clipboard->get($arg2)) {
-            throw new \RuntimeException('Clipboard don\'t have correct value on key ' . $arg2);
+        $var = $this->clipboard->get($arg2);
+        if ($arg1 != $var) {
+            throw new \RuntimeException(sprintf("Clipboard don't have value '%s' on key '%s' but '%s'", $arg1, $arg2, $var));
         }
     }
 
@@ -93,4 +95,19 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
         $value = $this->clipboard->get($arg1);
         $this->clipboard->set($arg2, $value);
     }
+
+    /**
+     * @Given Clipboard save the table
+     *
+     * @param TableNode $table
+     */
+    public function clipboardSaveTheTable(TableNode $table)
+    {
+        foreach($table as $row) {
+            $key = $row['clipboardKey'];
+            $value = $row['clipboardValue'];
+            $this->clipboard->set($key, $value);
+        }
+    }
+
 }

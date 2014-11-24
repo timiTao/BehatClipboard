@@ -5,14 +5,12 @@
  */
 namespace Behat\ClipboardExtension;
 
-use Behat\Behat\Context\ServiceContainer\ContextExtension;
 use Behat\Testwork\ServiceContainer\Extension as ExtensionInterface;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class ClipboardExtension
@@ -36,7 +34,6 @@ class ClipboardExtension implements ExtensionInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // TODO: Implement process() method.
     }
 
     /**
@@ -61,9 +58,6 @@ class ClipboardExtension implements ExtensionInterface
      */
     public function initialize(ExtensionManager $extensionManager)
     {
-        /**
-         * Nope
-         */
     }
 
     /**
@@ -82,9 +76,7 @@ class ClipboardExtension implements ExtensionInterface
             ->scalarNode('pattern')->defaultValue('/^%s\.([a-zA-Z0-9_\.]+)/')->info(
                 'All values that match PATTERN will be try to transform from clipboard value. Default: /^%s\.([a-zA-Z0-9_\.]+)/ where %s will be prefix'
             )->end()
-            ->scalarNode('throw_errors_on_not_found')->defaultTrue()->info(
-                'When value is not found, on TRUE, will throw exception. Default: false'
-            )->end();
+        ;
     }
 
     /**
@@ -95,63 +87,9 @@ class ClipboardExtension implements ExtensionInterface
      */
     public function load(ContainerBuilder $container, array $config)
     {
-        $this->loadClipboard($container);
-        $this->loadContextInitializer($container);
-        $this->loadContextReader($container);
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/Config'));
+        $loader->load('services.yml');
 
         $container->setParameter('clipboard.parameters', $config);
-    }
-
-    /**
-     * Initialize main clipboard
-     *
-     * @param ContainerBuilder $container
-     */
-    private function loadClipboard(ContainerBuilder $container)
-    {
-        $container->setDefinition(
-            ClipboardExtension::SERVICE_NAME,
-            new Definition(
-                'Behat\ClipboardExtension\Clipboard\ClipboardContainer', array(
-                    '%clipboard.parameters%'
-                )
-            )
-        );
-    }
-
-    /**
-     * Init initializer for behat context
-     *
-     * @param ContainerBuilder $container
-     */
-    private function loadContextInitializer(ContainerBuilder $container)
-    {
-        $definition = new Definition(
-            'Behat\ClipboardExtension\Context\Initializer\ClipboardInitializer', array(
-                new Reference(ClipboardExtension::SERVICE_NAME)
-            )
-        );
-        $definition->addTag(ContextExtension::INITIALIZER_TAG, array('priority' => 0));
-        $container->setDefinition('clipboard.context_initializer', $definition);
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     */
-    private function loadContextReader(ContainerBuilder $container)
-    {
-        $definition = new Definition('Behat\ClipboardExtension\Context\Reader\Transform\ClipboardTransform', array(
-                new Reference(ClipboardExtension::SERVICE_NAME)
-            ));
-        $container->setDefinition('clipboard.context_transform', $definition);
-
-        $definition = new Definition(
-            'Behat\ClipboardExtension\Context\Reader\ClipboardEventReader', array(
-                new Reference('clipboard.context_transform'),
-                '%clipboard.parameters%'
-            )
-        );
-        $definition->addTag(ContextExtension::READER_TAG, array('priority' => 0));
-        $container->setDefinition('clipboard.context_reader', $definition);
     }
 }

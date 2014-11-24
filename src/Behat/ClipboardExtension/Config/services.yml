@@ -1,0 +1,27 @@
+parameters:
+  clipboard.class: Behat\ClipboardExtension\Clipboard\ClipboardDotNotationContainer
+  clipboard.factory.class: Behat\ClipboardExtension\Clipboard\Factory
+  clipboard.context_transform.class: Behat\ClipboardExtension\Context\Reader\Transform\ClipboardTransform
+  clipboard.context_reader.class: Behat\ClipboardExtension\Context\Reader\ClipboardEventReader
+  clipboard.context_initializer.class: Behat\ClipboardExtension\Context\Initializer\ClipboardInitializer
+
+services:
+  clipboard:
+    class:  "%clipboard.class%"
+  clipboard.context_reader:
+    class: "%clipboard.context_reader.class%"
+    tags:
+      -  { name: context.reader }
+    arguments:
+      - "@clipboard.context_transform"
+      - "%clipboard.parameters%"
+  clipboard.context_transform:
+    class: "%clipboard.context_transform.class%"
+    arguments:
+      - "@clipboard"
+  clipboard.context_initializer:
+    class: "%clipboard.context_initializer.class%"
+    arguments: ["@clipboard"]
+    tags:
+      -  { name: context.initializer }
+

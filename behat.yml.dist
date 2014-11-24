@@ -1,8 +1,10 @@
 default:
+  autoload:
+      '': %paths.base%/src/
   suites:
     default:
       path: %paths.base%/features
       contexts:
         - Behat\ClipboardExtension\Context\FeatureContext
   extensions:
-    Behat\ClipboardExtension\ClipboardExtension: ~
+    Behat\ClipboardExtension\ClipboardExtension:

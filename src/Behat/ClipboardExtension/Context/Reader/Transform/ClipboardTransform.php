@@ -32,6 +32,15 @@ class ClipboardTransform implements ClipboardTransformInterface
      */
     public function transform($data)
     {
+        return $this->transformValue($data);
+    }
+
+    /**
+     * @param mixed $data
+     * @return mixed
+     */
+    private function transformValue($data)
+    {
         return $this->clipboard->get($data);
     }
 }
