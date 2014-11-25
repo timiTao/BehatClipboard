@@ -4,6 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/timitao/behatclipboard/downloads.svg)](https://packagist.org/packages/timitao/behatclipboard)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/819444f5-acac-4508-bf3f-185cef9dd4ec/mini.png)](https://insight.sensiolabs.com/projects/819444f5-acac-4508-bf3f-185cef9dd4ec)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/timitao/behatclipboard/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/timitao/behatclipboard/?branch=master)
+[![Build Status](https://travis-ci.org/timiTao/behatclipboard.svg?branch=master)](https://travis-ci.org/timiTao/behatclipboard)
 
 
 BehatClipboard
