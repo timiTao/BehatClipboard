@@ -52,7 +52,7 @@ class ClipboardExtension implements ExtensionInterface
      * This method is called immediately after all extensions are activated but
      * before any extension `configure()` method is called. This allows extensions
      * to hook into the configuration of other extensions providing such an
-     * extension point.
+     * extension point
      *
      * @param ExtensionManager $extensionManager
      */
@@ -78,8 +78,7 @@ class ClipboardExtension implements ExtensionInterface
             )->end()
             ->arrayNode('defaults')
                 ->prototype('scalar')
-            ->end()
-        ;
+            ->end();
     }
 
     /**
@@ -90,7 +89,7 @@ class ClipboardExtension implements ExtensionInterface
      */
     public function load(ContainerBuilder $container, array $config)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/Config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/Config'));
         $loader->load('services.yml');
 
         $container->setParameter('clipboard.parameters', $config);
