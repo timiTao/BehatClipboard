@@ -10,7 +10,7 @@
 BehatClipboard
 ==============
 
-BehatClipboard is an integration layer between Behat 3.0+ and it provides:
+BehatClipboard is an integration layer between contexts in Behat 3.0+ and it provides:
 
 * Additional service for Behat ``Clipboard``,
 * base ``Behat\ClipboardExtension\Context\FeatureContext`` context which provides base
