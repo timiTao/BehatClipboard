@@ -66,7 +66,9 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
     {
         $var = $this->clipboard->get($arg2);
         if ($arg1 != $var) {
-            throw new \RuntimeException(sprintf("Clipboard don't have value '%s' on key '%s' but '%s'", $arg1, $arg2, $var));
+            throw new \RuntimeException(
+                sprintf("Clipboard don't have value '%s' on key '%s' but '%s'", $arg1, $arg2, $var)
+            );
         }
     }
 
@@ -105,7 +107,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
      */
     public function clipboardSaveTheTable(TableNode $table)
     {
-        foreach($table as $row) {
+        foreach ($table as $row) {
             $key = $row['clipboardKey'];
             $value = $row['clipboardValue'];
             $this->clipboard->set($key, $value);
@@ -115,6 +117,8 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
     /**
      * @Given Clipboard save on key :key the value:
      *
+     * @param $key
+     * @param PyStringNode $string
      */
     public function clipboardSaveOnKeyTheValue($key, PyStringNode $string)
     {

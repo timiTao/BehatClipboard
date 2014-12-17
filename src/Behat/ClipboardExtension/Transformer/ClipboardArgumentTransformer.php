@@ -6,7 +6,6 @@
 
 namespace Behat\ClipboardExtension\Transformer;
 
-
 use Behat\Behat\Definition\Call\DefinitionCall;
 use Behat\Behat\Transformation\Transformer\ArgumentTransformer;
 use Behat\ClipboardExtension\Clipboard\ClipboardInterface;
@@ -41,7 +40,6 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
         $this->parameters = $parameters;
     }
 
-
     /**
      * Checks if transformer supports argument.
      *
@@ -53,7 +51,7 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
      */
     public function supportsDefinitionAndArgument(DefinitionCall $definitionCall, $argumentIndex, $argumentValue)
     {
-        return true;
+        return !is_object($argumentValue) || $argumentValue instanceof ArgumentInterface;
     }
 
     /**
@@ -67,16 +65,12 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
      */
     public function transformArgument(DefinitionCall $definitionCall, $argumentIndex, $argumentValue)
     {
-        if (is_object($argumentValue) && !$argumentValue instanceof ArgumentInterface) {
-            return $argumentValue;
-        }
-
         if ($argumentValue instanceof TableNode) {
             return $this->transformTableNode($argumentValue);
         }
-//        if ($argumentValue instanceof PyStringNode) {
-//            return $this->tranformPyString($argumentValue);
-//        }
+        if ($argumentValue instanceof PyStringNode) {
+            return $this->transformPyString($argumentValue);
+        }
 
         return $this->transformValue($argumentValue);
     }
@@ -124,6 +118,18 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
     }
 
     /**
+     * @param PyStringNode $stringNode
+     * @return PyStringNode
+     */
+    protected function transformPyString(PyStringNode $stringNode)
+    {
+        $newValue = $this->transformValue($stringNode);
+        $strings = explode("\n", $newValue);
+
+        return new PyStringNode($strings, $stringNode->getLine());
+    }
+
+    /**
      * @return string
      */
     private function getPrefix()
@@ -138,6 +144,4 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
     {
         return $this->parameters['pattern'];
     }
-
-
-} 
+}

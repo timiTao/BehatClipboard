@@ -43,7 +43,7 @@ class ClipboardExtension implements ExtensionInterface
      */
     public function getConfigKey()
     {
-        return 'clipboard';
+        return ClipboardExtension::SERVICE_NAME;
     }
 
     /**
@@ -71,10 +71,10 @@ class ClipboardExtension implements ExtensionInterface
             ->addDefaultsIfNotSet()
             ->children()
             ->scalarNode('prefix')->defaultValue('clipboard')->info(
-                'All values that match PREFIX.** will be try to transform from clipboard value. Default: clipboard'
+                'All values that match PREFIX(**) will be try to transform from clipboard value. Default: clipboard'
             )->end()
             ->scalarNode('pattern')->defaultValue('/%s\(([a-zA-Z0-9_\.\-]+)\)/')->info(
-                'All values that match PATTERN will be try to transform from clipboard value. Default: /^%s\.([a-zA-Z0-9_\.]+)/ where %s will be prefix'
+                'All values that match PATTERN will be try to transform from clipboard value. Default: /%s\(([a-zA-Z0-9_\.\-]+)\)/ where %s will be prefix'
             )->end()
             ->arrayNode('defaults')
             ->prototype('scalar')
