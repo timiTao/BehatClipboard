@@ -122,7 +122,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
      */
     public function clipboardSaveOnKeyTheValue($key, PyStringNode $string)
     {
-        $this->clipboard->set($key, $string);
+        $this->clipboard->set($key, $string->getRaw());
     }
 
 }

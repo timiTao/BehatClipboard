@@ -1,7 +1,6 @@
 @coreTest
 @clipboard
 Feature: Test base clipboard context
-
   Scenario Outline: Assert the value "([^"]*)" equals "([^"]*)
     #key is without prefix
     Given Clipboard save the value "<value>" on key "<key>"
@@ -45,3 +44,14 @@ Feature: Test base clipboard context
     test clipboard(testKey) test2
     """
     Then Clipboard has value "test testKeyValue test2" on key "testKey2"
+
+  Scenario: Test multiple replace in pyString
+    Given Clipboard save the table
+      | clipboardKey | clipboardValue |
+      | testKey1     | value1         |
+      | testKey2     | value2         |
+    Then Clipboard save on key "testKey2" the value:
+    """
+    test clipboard(testKey1) test2 clipboard(testKey2)
+    """
+    Then Clipboard has value "test value1 test2 value2" on key "testKey2"

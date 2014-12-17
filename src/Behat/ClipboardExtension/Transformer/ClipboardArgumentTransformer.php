@@ -87,27 +87,43 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
     {
         $pattern = sprintf($this->getPattern(), $this->getPrefix());
 
-        if (!preg_match($pattern, $argumentValue, $matches)) {
+        if (!preg_match_all($pattern, $argumentValue, $matches)) {
             return $argumentValue;
         }
-
-        $matchedPattern = $matches[0];
-        $matchedKey = $matches[1];
 
         $clipboard = $this->clipboard;
-        if (!$clipboard->has($matchedKey)) {
-            return $argumentValue;
-        }
 
-        $newValue = $clipboard->get($matchedKey);
+        if (count($matches[0]) == 1) {
+            $matchedPattern = $matches[0][0];
+            $matchedKey = $matches[1][0];
+            if (!$clipboard->has($matchedKey)) {
+                return $argumentValue;
+            }
 
-        if (strlen($matchedPattern) == strlen($argumentValue)) {
+            $newValue = $clipboard->get($matchedKey);
+
+            if (strlen($matchedPattern) == strlen($argumentValue)) {
+                return $newValue;
+            }
+
+            if (is_string($newValue)) {
+                return str_replace($matchedPattern, $newValue, $argumentValue);
+            }
+
             return $newValue;
         }
 
-        if (is_string($newValue)) {
-            return str_replace($matchedPattern, $newValue, $argumentValue);
+
+        $clipboardValues = [];
+        foreach ($matches[1] as $key => $matchedKey) {
+
+            $clipboardValues[$key] = null;
+            if ($clipboard->has($matchedKey)) {
+                $clipboardValues[$key] = $clipboard->get($matchedKey);
+            }
         }
+
+        $newValue = str_replace($matches[0], $clipboardValues, $argumentValue);
 
         return $newValue;
     }
@@ -135,7 +151,7 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
      */
     protected function transformPyString(PyStringNode $stringNode)
     {
-        $newValue = $this->transformValue($stringNode);
+        $newValue = $this->transformValue($stringNode->getRaw());
         $strings = explode("\n", $newValue);
 
         return new PyStringNode($strings, $stringNode->getLine());
