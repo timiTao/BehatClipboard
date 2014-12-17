@@ -72,8 +72,7 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
             return $this->transformPyString($argumentValue);
         }
 
-        if (is_array($argumentValue))
-        {
+        if (is_array($argumentValue)) {
             return $argumentValue;
         }
 
@@ -102,7 +101,15 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
 
         $newValue = $clipboard->get($matchedKey);
 
-        return str_replace($matchedPattern, $newValue, $argumentValue);
+        if (strlen($matchedPattern) == strlen($argumentValue)) {
+            return $newValue;
+        }
+
+        if (is_string($newValue)) {
+            return str_replace($matchedPattern, $newValue, $argumentValue);
+        }
+
+        return $newValue;
     }
 
     /**
