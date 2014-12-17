@@ -72,6 +72,11 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
             return $this->transformPyString($argumentValue);
         }
 
+        if (is_array($argumentValue))
+        {
+            return $argumentValue;
+        }
+
         return $this->transformValue($argumentValue);
     }
 
