@@ -54,23 +54,7 @@ class ClipboardEventReader implements ContextReader
             return $transform->transform($data);
         };
 
-        $pattern = sprintf($this->getPattern(), $this->getPrefix());
 
         return [new RuntimeTransformation($pattern, $callable, '')];
-    }
-
-    /**
-     * @return string
-     */
-    private function getPrefix()
-    {
-        return $this->parameters['prefix'];
-    }
-    /**
-     * @return string
-     */
-    private function getPattern()
-    {
-        return $this->parameters['pattern'];
     }
 }

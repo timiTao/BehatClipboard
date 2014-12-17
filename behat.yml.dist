@@ -7,7 +7,7 @@ default:
       contexts:
         - Behat\ClipboardExtension\Context\FeatureContext
   extensions:
-    Behat\ClipboardExtension\ClipboardExtension:
+    Behat\ClipboardExtension\ServiceContainer\ClipboardExtension:
       defaults:
         key1: value1
         key2.key2 : value2
