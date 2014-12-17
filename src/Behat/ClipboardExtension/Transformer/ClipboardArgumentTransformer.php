@@ -106,11 +106,7 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
                 return $newValue;
             }
 
-            if (is_string($newValue)) {
-                return str_replace($matchedPattern, $newValue, $argumentValue);
-            }
-
-            return $newValue;
+            return str_replace($matchedPattern, $newValue, $argumentValue);
         }
 
 
