@@ -57,13 +57,13 @@ The easiest way to install is by using [Composer](https://getcomposer.org):
 
 ```bash
 $> curl -sS https://getcomposer.org/installer | php
-$> php composer.phar require timitao/behatclipboard='1.0'
+$> php composer.phar require timitao/behatclipboard='1.0.*'
 ```
 
 or composer.json
 
     "require": {
-        "timitao/behatclipboard": "1.0"
+        "timitao/behatclipboard": "1.0.*"
     },
     
 ## Action
