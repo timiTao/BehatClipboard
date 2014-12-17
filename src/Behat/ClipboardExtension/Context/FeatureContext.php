@@ -8,6 +8,7 @@ namespace Behat\ClipboardExtension\Context;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\ClipboardExtension\Clipboard\ClipboardInterface;
+use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 
 /**
@@ -65,7 +66,9 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
     {
         $var = $this->clipboard->get($arg2);
         if ($arg1 != $var) {
-            throw new \RuntimeException(sprintf("Clipboard don't have value '%s' on key '%s' but '%s'", $arg1, $arg2, $var));
+            throw new \RuntimeException(
+                sprintf("Clipboard don't have value '%s' on key '%s' but '%s'", $arg1, $arg2, $var)
+            );
         }
     }
 
@@ -76,6 +79,7 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
      *
      * @param $arg1
      * @param $arg2
+     * @throws \RuntimeException
      */
     public function clipboardOverKeyHave($arg1, $arg2)
     {
@@ -103,11 +107,22 @@ class FeatureContext implements Context, SnippetAcceptingContext, ClipboardConte
      */
     public function clipboardSaveTheTable(TableNode $table)
     {
-        foreach($table as $row) {
+        foreach ($table as $row) {
             $key = $row['clipboardKey'];
             $value = $row['clipboardValue'];
             $this->clipboard->set($key, $value);
         }
+    }
+
+    /**
+     * @Given Clipboard save on key :key the value:
+     *
+     * @param $key
+     * @param PyStringNode $string
+     */
+    public function clipboardSaveOnKeyTheValue($key, PyStringNode $string)
+    {
+        $this->clipboard->set($key, $string);
     }
 
 }
