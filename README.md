@@ -103,7 +103,7 @@ Actually used configuration:
 * ``prefix`` - prefix for recognise data in scenario to replace. Default: ``clipboard``
 * ``pattern`` - pattern that will be complete with prefix and looking data to transform from clipboard. Default: ``/%s\(([a-zA-Z0-9_\.\-]+)\)/``
 
-## Configuration
+## Suggestion
 
 Suggested to use with [Behat Assert Context](https://github.com/timiTao/BehatAssertContext).
 
