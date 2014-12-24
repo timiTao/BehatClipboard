@@ -103,6 +103,10 @@ Actually used configuration:
 * ``prefix`` - prefix for recognise data in scenario to replace. Default: ``clipboard``
 * ``pattern`` - pattern that will be complete with prefix and looking data to transform from clipboard. Default: ``/%s\(([a-zA-Z0-9_\.\-]+)\)/``
 
+## Configuration
+
+Suggested to use with [Behat Assert Context](https://github.com/timiTao/BehatAssertContext).
+
 ## Versioning
  
 Staring version ``1.0.0``, will follow [Semantic Versioning v2.0.0](http://semver.org/spec/v2.0.0.html).
