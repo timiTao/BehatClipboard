@@ -76,6 +76,9 @@ class ClipboardExtension implements ExtensionInterface
             ->scalarNode('pattern')->defaultValue('/%s\(([a-zA-Z0-9_\.\-]+)\)/')->info(
                 'All values that match PATTERN will be try to transform from clipboard value. Default: /%s\(([a-zA-Z0-9_\.\-]+)\)/ where %s will be prefix'
             )->end()
+            ->booleanNode('exception_mode')->defaultFalse()->info(
+                'By default, clipboard will ignore values that have the same pattern. If set on true, if key will be not found, will throw exception'
+            )->end()
             ->arrayNode('defaults')
             ->prototype('scalar')
             ->end();

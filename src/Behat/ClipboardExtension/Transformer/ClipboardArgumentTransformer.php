@@ -9,6 +9,7 @@ namespace Behat\ClipboardExtension\Transformer;
 use Behat\Behat\Definition\Call\DefinitionCall;
 use Behat\Behat\Transformation\Transformer\ArgumentTransformer;
 use Behat\ClipboardExtension\Clipboard\ClipboardInterface;
+use Behat\ClipboardExtension\Exception\ClipboardException;
 use Behat\Gherkin\Node\ArgumentInterface;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
@@ -82,6 +83,8 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
     /**
      * @param $argumentValue
      * @return mixed
+     *
+     * @throws ClipboardException
      */
     protected function transformValue($argumentValue)
     {
@@ -97,6 +100,10 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
             $matchedPattern = $matches[0][0];
             $matchedKey = $matches[1][0];
             if (!$clipboard->has($matchedKey)) {
+                if ($this->isExceptionMode()) {
+                    throw new ClipboardException("Given key don't exists: " . $matchedKey);
+                }
+
                 return $argumentValue;
             }
 
@@ -112,11 +119,13 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
 
         $clipboardValues = [];
         foreach ($matches[1] as $key => $matchedKey) {
-
             $clipboardValues[$key] = null;
-            if ($clipboard->has($matchedKey)) {
-                $clipboardValues[$key] = $clipboard->get($matchedKey);
+            if (!$clipboard->has($matchedKey)) {
+                if ($this->isExceptionMode()) {
+                    throw new ClipboardException("Given key don't exists: " . $matchedKey);
+                }
             }
+            $clipboardValues[$key] = $clipboard->get($matchedKey);
         }
 
         $newValue = str_replace($matches[0], $clipboardValues, $argumentValue);
@@ -167,5 +176,13 @@ class ClipboardArgumentTransformer implements ArgumentTransformer
     private function getPattern()
     {
         return $this->parameters['pattern'];
+    }
+
+    /**
+     * @return bool
+     */
+    private function isExceptionMode()
+    {
+        return $this->parameters['exception_mode'];
     }
 }
